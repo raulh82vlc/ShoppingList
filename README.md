@@ -41,8 +41,8 @@ Finally, this information would be passed through the UI thread.
 - Error handling integrated for `Http` or `Connection` or `IO` issues, also empty state indicating no results when required.
 - A Loader is placed each time a new request is started, to indicate the user the fact that there is an action going on
 - There is a small amount of Unit test cases for the most critical parts: mainly the strategy for discounts as well as repository applying of its strategy (unit tests).
-- Discount 1: Applied in 2-for-1 promotions (buy two of the same product, get one free), and would like for there to be a 2-for-1 special on VOUCHER items.
-- Discount 2: For bulk purchases (buying x or more of a product, the price of that product is reduced), and demands that if you buy 3 or more TSHIRT items, the price per unit should be 19.00€.
+- Discount 1: Applied in **2-for-1** promotions (buy two of the same product, get one free), and would like for there to be a 2-for-1 special on VOUCHER items.
+- Discount 2: For bulk purchases (buying x or more of a product, the price of that product is reduced), and demands that if you buy **3 or more** TSHIRT items, the price per unit should be 19.00€.
 
 ### SDK support
 Support SDKs from **16** to **25**
