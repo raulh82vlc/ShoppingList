@@ -44,9 +44,13 @@ import javax.inject.Inject;
 public class ProductsRepositoryImpl implements ProductsRepository<ProductResponse, ProductDomain> {
 
     private NetDataSource<ProductResponse> netDataSource;
+    // Strategy to checkout with discounts or without any
     private CheckoutStrategy checkoutStrategy;
+    // List of products on the basket of the shopping list (limited size)
     private List<ProductDomain> shoppingList = new ArrayList<>(ConstantsForProducts.LIMIT_OF_MY_SHOPPING);
+    // Dictionary of shopping products added by type (type, number on basket)
     private Map<String, Integer> shoppingListDictionary = new HashMap<>();
+    // Dictionary reference of products (code, price)
     private Map<String, Float> referenceProductListDictionary = new HashMap<>();
 
     @Inject
@@ -88,13 +92,11 @@ public class ProductsRepositoryImpl implements ProductsRepository<ProductRespons
 
     @Override
     public String checkoutCurrentShoppingList() {
-        float resultCheckOutSum = getResultCheckOutSum();
-        StringBuilder builder = getCheckoutFormatted(resultCheckOutSum);
-        return builder.toString();
+        return getCheckoutFormatted(getResultCheckOutSum());
     }
 
     @NonNull
-    private StringBuilder getCheckoutFormatted(float resultCheckOutSum) {
+    private String getCheckoutFormatted(float resultCheckOutSum) {
         StringBuilder builder = new StringBuilder();
         builder.append("Items: ");
         int position = 0, sizeOfShoppingList = shoppingList.size();
@@ -108,7 +110,7 @@ public class ProductsRepositoryImpl implements ProductsRepository<ProductRespons
         builder.append("\nTotal: ");
         builder.append(String.format(Locale.UK, ConstantsForProducts.FORMAT_FOR_DECIMALS, resultCheckOutSum));
         builder.append("€");
-        return builder;
+        return builder.toString();
     }
 
     protected float getResultCheckOutSum() {

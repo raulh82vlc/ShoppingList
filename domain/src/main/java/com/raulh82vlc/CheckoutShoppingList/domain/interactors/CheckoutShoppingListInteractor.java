@@ -17,7 +17,7 @@
 package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 
 /**
- * Get Products List Use case
+ * Check out shopping list Use case
  *
  * @author Raul Hernandez Lopez
  */
@@ -27,7 +27,5 @@ public interface CheckoutShoppingListInteractor {
 
     interface CheckoutShoppingListCallback {
         void onCheckoutOK(String shoppingListCalculated);
-
-        void onCheckoutKO(String error);
     }
 }

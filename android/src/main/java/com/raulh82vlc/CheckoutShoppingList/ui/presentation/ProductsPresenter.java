@@ -72,7 +72,5 @@ public interface ProductsPresenter {
         void showProductAddedCorrectly(String name);
 
         void showCheckoutResult(String shoppingListCalculated);
-
-        void errorWhenCheckout(String error);
     }
 }

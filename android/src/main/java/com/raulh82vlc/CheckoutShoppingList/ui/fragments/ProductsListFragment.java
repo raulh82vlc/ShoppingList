@@ -228,9 +228,4 @@ public class ProductsListFragment extends BaseFragment implements
                 });
         alertDialog.show();
     }
-
-    @Override
-    public void errorWhenCheckout(String error) {
-
-    }
 }

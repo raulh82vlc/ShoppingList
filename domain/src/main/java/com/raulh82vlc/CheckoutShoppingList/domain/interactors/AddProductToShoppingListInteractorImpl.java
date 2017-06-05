@@ -56,21 +56,21 @@ public class AddProductToShoppingListInteractorImpl implements AddProductToShopp
 
     @Override
     public void run() {
-        String errorMessage = "Issue when adding product to the shopping list: ";
-        boolean isAdded = repository.addProductToShoppingList(productDomain);
+        String errorMessage = "Issue when adding a product to the shopping list: ";
+        final boolean isAdded = repository.addProductToShoppingList(productDomain);
         if (isAdded) {
-            notifySuccessfullyLoaded(productDomain.getName());
+            notifySuccessfullyAdded(productDomain.getName());
         } else {
             notifyError(errorMessage + productDomain.getName());
         }
     }
 
     /**
-     * <p>Notifies to the UI (main) thread the result of the request,
-     * and sends a callback with a list</p>
-     * @param name
+     * <p>Notifies to the UI (main) thread the result of operation,
+     * and sends a callback with the added element</p>
+     * @param name name of the product
      */
-    private void notifySuccessfullyLoaded(final String name) {
+    private void notifySuccessfullyAdded(final String name) {
         mainThread.post(new Runnable() {
             @Override
             public void run() {

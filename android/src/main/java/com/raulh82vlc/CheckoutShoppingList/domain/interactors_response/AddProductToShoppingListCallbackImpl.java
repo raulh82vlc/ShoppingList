@@ -20,8 +20,8 @@ import com.raulh82vlc.CheckoutShoppingList.domain.interactors.AddProductToShoppi
 import com.raulh82vlc.CheckoutShoppingList.ui.presentation.ProductsPresenter;
 
 /**
- * Get Products list by means of its callback, communicating towards its view, mapping resuts from the API
- * to the view
+ * Add Product to Shopping list by means of its callback, communicating towards its view
+ *
  * @author Raul Hernandez Lopez.
  */
 public class AddProductToShoppingListCallbackImpl

@@ -20,8 +20,8 @@ import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutShoppingLi
 import com.raulh82vlc.CheckoutShoppingList.ui.presentation.ProductsPresenter;
 
 /**
- * Get Products list by means of its callback, communicating towards its view, mapping resuts from the API
- * to the view
+ * Checkout of shopping list by means of its callback, communicating towards its view
+ *
  * @author Raul Hernandez Lopez.
  */
 public class CheckoutShoppingListCallbackImpl implements CheckoutShoppingListInteractor.CheckoutShoppingListCallback {
@@ -37,14 +37,6 @@ public class CheckoutShoppingListCallbackImpl implements CheckoutShoppingListInt
         if (view.isReady()) {
             view.hideLoader();
             view.showCheckoutResult(shoppingListCalculated);
-        }
-    }
-
-    @Override
-    public void onCheckoutKO(String error) {
-        if (view.isReady()) {
-            view.hideLoader();
-            view.errorWhenCheckout(error);
         }
     }
 }

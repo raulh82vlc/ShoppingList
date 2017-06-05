@@ -26,7 +26,7 @@ import com.raulh82vlc.CheckoutShoppingList.domain.repository.ProductsRepository;
 import javax.inject.Inject;
 
 /**
- * Implementation of the Add Product to Shopping List Interactor
+ * Implementation of Checkout of the Shopping List Interactor
  *
  * @author Raul Hernandez Lopez
  */
@@ -36,7 +36,6 @@ public class CheckoutShoppingListInteractorImpl implements CheckoutShoppingListI
     final private MainThread mainThread;
     final private ProductsRepository<ProductResponse, ProductDomain> repository;
     private CheckoutShoppingListCallback callback;
-    private ProductDomain productDomain;
 
     @Inject
     CheckoutShoppingListInteractorImpl(InteractorExecutor executor,
@@ -55,37 +54,20 @@ public class CheckoutShoppingListInteractorImpl implements CheckoutShoppingListI
 
     @Override
     public void run() {
-        String errorMessage = "Issue when adding product to the shopping list: ";
-        String formattedCheckout = repository.checkoutCurrentShoppingList();
-        if (!formattedCheckout.isEmpty()) {
-            notifySuccessfullyLoaded(formattedCheckout);
-        } else {
-            notifyError(errorMessage + productDomain.getName());
-        }
+        //there is no error case, because despite this is with an empty basket, says 0.00€
+        notifySuccessfullyCheckedOut(repository.checkoutCurrentShoppingList());
     }
 
     /**
-     * <p>Notifies to the UI (main) thread the result of the request,
-     * and sends a callback with a list</p>
-     * @param name
+     * <p>Notifies to the UI (main) thread the result of checkout,
+     * and sends a callback the string</p>
+     * @param checkOutFormattedList
      */
-    private void notifySuccessfullyLoaded(final String name) {
+    private void notifySuccessfullyCheckedOut(final String checkOutFormattedList) {
         mainThread.post(new Runnable() {
             @Override
             public void run() {
-                callback.onCheckoutOK(name);
-            }
-        });
-    }
-
-    /**
-     * <p>Notifies to the UI (main) thread that an error happened</p>
-     */
-    private void notifyError(final String error) {
-        mainThread.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onCheckoutKO(error);
+                callback.onCheckoutOK(checkOutFormattedList);
             }
         });
     }

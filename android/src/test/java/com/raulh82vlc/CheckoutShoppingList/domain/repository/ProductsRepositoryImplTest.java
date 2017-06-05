@@ -69,6 +69,19 @@ public class ProductsRepositoryImplTest {
     }
 
     @Test
+    public void checkoutCurrentShoppingEmptyList() throws Exception {
+        // checks number of added products
+        assertEquals(0, underTest.numberOfProductsOnBasket());
+        // checks final result
+        assertEquals(0f, underTest.getResultCheckOutSum(), DELTA);
+
+        String expectedResult = "Items: \n"
+                + "Total: 0.00€";
+        // checks expected format for the final check out to show to the user
+        assertEquals(expectedResult, underTest.checkoutCurrentShoppingList());
+    }
+
+    @Test
     public void checkoutCurrentShoppingListSimple() throws Exception {
         // Adds products to the shopping list
         underTest.addProductToShoppingList(new ProductDomain(ConstantsForProducts.VOUCHER_TYPE, "VOUCHER", 5.0f));

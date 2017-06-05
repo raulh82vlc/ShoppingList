@@ -19,7 +19,7 @@ package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
 
 /**
- * Get Products List Use case
+ * Add product to Shopping List Use case
  *
  * @author Raul Hernandez Lopez
  */
