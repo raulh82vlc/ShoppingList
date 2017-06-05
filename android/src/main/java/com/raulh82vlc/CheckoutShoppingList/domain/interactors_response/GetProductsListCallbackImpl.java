@@ -18,8 +18,8 @@ package com.raulh82vlc.CheckoutShoppingList.domain.interactors_response;
 
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.GetProductsInteractor;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.mappers.ProductsListModelDataMapper;
-import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductUI;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductResponse;
+import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductUI;
 import com.raulh82vlc.CheckoutShoppingList.ui.presentation.ProductsPresenter;
 
 import java.util.List;

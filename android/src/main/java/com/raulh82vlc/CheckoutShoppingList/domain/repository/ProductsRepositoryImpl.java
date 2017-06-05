@@ -18,8 +18,8 @@ package com.raulh82vlc.CheckoutShoppingList.domain.repository;
 
 import android.support.annotation.NonNull;
 
-import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.NetDataSourceImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsForProducts;
+import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.NetDataSourceImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.ConnectionException;
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.HttpException;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
