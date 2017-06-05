@@ -17,7 +17,6 @@
 package com.raulh82vlc.CheckoutShoppingList.domain.interactors.mappers;
 
 import com.raulh82vlc.CheckoutShoppingList.di.scopes.ActivityScope;
-import com.raulh82vlc.CheckoutShoppingList.domain.interactors.AddProductToShoppingListInteractor;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductResponse;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductUI;

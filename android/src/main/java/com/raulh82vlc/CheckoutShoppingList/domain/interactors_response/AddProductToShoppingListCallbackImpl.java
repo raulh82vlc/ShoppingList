@@ -24,7 +24,8 @@ import com.raulh82vlc.CheckoutShoppingList.ui.presentation.ProductsPresenter;
  * to the view
  * @author Raul Hernandez Lopez.
  */
-public class AddProductToShoppingListCallbackImpl implements AddProductToShoppingListInteractor.AddProductToShoppingListCallback  {
+public class AddProductToShoppingListCallbackImpl
+        implements AddProductToShoppingListInteractor.AddProductToShoppingListCallback  {
 
     private final ProductsPresenter.View view;
 

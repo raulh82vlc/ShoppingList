@@ -128,6 +128,7 @@ public class ProductsRepositoryImpl implements ProductsRepository<ProductRespons
                             ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT);
                     break;
                 case ConstantsForProducts.MUG_TYPE:
+                default:
                     resultCheckOutSum += checkoutStrategy.applyNoDiscounts(setOfValues.getValue(),
                             referenceProductListDictionary.get(ConstantsForProducts.MUG_TYPE));
                     break;

@@ -75,7 +75,8 @@ public class NetOperationsImpl implements NetOperations<ProductResponse> {
                         if (BuildConfig.DEBUG) {
                             if (!productResponses.isEmpty()) {
                                 for (ProductResponse productResponseItem : productResponses) {
-                                    Timber.d(MessageFormat.format("Http response body: {0}", productResponseItem.toString()));
+                                    Timber.d(MessageFormat.format("Http response body: {0}",
+                                            productResponseItem.toString()));
                                 }
                             }
                         }

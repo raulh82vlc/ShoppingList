@@ -47,16 +47,18 @@ public class CheckoutStrategyImplTest {
 
     @Test
     public void applyDiscountsToTypeXOrMore() throws Exception {
-        assertEquals(57.0f, checkoutStrategy.applyDiscountsToTypeXOrMore(3, 20.0f, 3, ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT), DELTA);
+        assertEquals(57.0f, checkoutStrategy.applyDiscountsToTypeXOrMore(3, 20.0f, 3,
+                ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT), DELTA);
     }
 
     @Test
     public void applyDiscountsToTypeXOrMoreNoDiscount() throws Exception {
-        assertEquals(40.0f, checkoutStrategy.applyDiscountsToTypeXOrMore(2, 20.0f, 3, ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT), DELTA);
+        assertEquals(40.0f, checkoutStrategy.applyDiscountsToTypeXOrMore(2, 20.0f, 3,
+                ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT), DELTA);
     }
 
     @Test
     public void applyNoDiscounts() throws Exception {
-        assertEquals(37.5f,checkoutStrategy.applyNoDiscounts(5, 7.5f), DELTA);
+        assertEquals(37.5f, checkoutStrategy.applyNoDiscounts(5, 7.5f), DELTA);
     }
 }
