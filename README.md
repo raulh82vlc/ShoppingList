@@ -25,6 +25,7 @@ The exchange between the different *layers* is as follows:
 - **Repository layer**:
   - from the models coming from a concrete *data source* to the *Repository* (repository is the responsible of managing from 1 to n datasources, in this case only network datasource)
   - from the *Repository* to their associated *Interactor* (or use case)
+  - this *Repository* contains cached information for the shopping list content in RAM memory, being part of its implementation
 - **Interactor layer**: from the *Interactor*, which is responsible of the *business logic* and communicating results to the *Presenter*
 - **Presenter layer**: from the *Presenter*, which provides the final formatted info to a passive `View` from a UI element (fragments / activities).
 Finally, this information would be passed through the UI thread.
@@ -37,7 +38,9 @@ Finally, this information would be passed through the UI thread.
 ### Features
 - At the main screen a list of products which can be bought with their code, name and price
 - Once clicked an item, the product is added to the list, and a toast is shown if correctly added
-- For checking out and seeing the total basket price, click on the FAB button, this provides a final amount with discounts on it
+- For *checking out* and seeing the total basket price, click on the FAB button, this provides a final amount with discounts on it
+- The *repository* contains cached information (RAM) for making an easy check out of the shopping list at any time
+- For *removing* a previous shopping list (cached one), you need to entirely close the app, then the cache is clean
 - Error handling integrated for `Http` or `Connection` or `IO` issues, also empty state indicating no results when required.
 - A Loader is placed each time a new request is started, to indicate the user the fact that there is an action going on
 - There is a small amount of Unit test cases for the most critical parts: mainly the strategy for discounts as well as repository applying of its strategy (unit tests).
@@ -48,7 +51,6 @@ Finally, this information would be passed through the UI thread.
 Support SDKs from **16** to **25**
 
 # Disclosure - Libraries used
-- [Marvel API](http://developer.marvel.com/) API selected
 - [Dagger 2](http://google.github.io/dagger) for Dependency Injection
 - [ButterKnife](http://jakewharton.github.io/butterknife) v6.1.0 for Views Injection
 - [Retrofit 2](https://github.com/square/retrofit) v2.1.0 for Network requests
