@@ -47,15 +47,18 @@ public class CheckoutShoppingListInteractorImplTest {
     InteractorExecutor executor;
     @Mock
     MainThread mainThread;
+
     CheckoutStrategyImpl checkoutStrategy;
     private CheckoutShoppingListInteractorImpl underTest;
-    private Map<String, Float> productsReference = new HashMap<>();
-    private Map<String, Integer> shoppingListDictionary = new HashMap<>();
+    private Map<String, Float> productsReference;
+    private Map<String, Integer> shoppingListDictionary;
 
     @Before
     public void setUp() {
         initMocks(this);
         checkoutStrategy = new CheckoutStrategyImpl();
+        productsReference = new HashMap<>();
+        shoppingListDictionary = new HashMap<>();
         productsReference.put(ConstantsDomain.TSHIRT_TYPE, 20.0f);
         productsReference.put(ConstantsDomain.VOUCHER_TYPE, 5.0f);
         productsReference.put(ConstantsDomain.MUG_TYPE, 7.5f);
@@ -65,6 +68,7 @@ public class CheckoutShoppingListInteractorImplTest {
     @After
     public void tearDown() {
         underTest = null;
+        checkoutStrategy = null;
         productsReference.clear();
     }
 

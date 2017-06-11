@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Checkout shopping list output
@@ -44,6 +45,7 @@ public class CheckoutShoppingListCallbackImplTest {
 
     @Before
     public void setUp() {
+        initMocks(this);
         shoppingList = new ArrayList<>();
         underTest = new CheckoutShoppingListCallbackImpl(view);
     }

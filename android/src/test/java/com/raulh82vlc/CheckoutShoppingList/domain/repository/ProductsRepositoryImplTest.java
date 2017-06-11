@@ -19,6 +19,8 @@ package com.raulh82vlc.CheckoutShoppingList.domain.repository;
 import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsDomain;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +31,17 @@ import static org.junit.Assert.assertEquals;
  */
 public class ProductsRepositoryImplTest {
 
-    private ProductsRepositoryImpl underTest = new ProductsRepositoryImpl(null);
+    private ProductsRepositoryImpl underTest;
+
+    @Before
+    public void setUp() {
+        underTest = new ProductsRepositoryImpl(null);
+    }
+
+    @After
+    public void tearDown() {
+        underTest = null;
+    }
 
     @Test
     public void addProductsToShoppingList() throws Exception {
