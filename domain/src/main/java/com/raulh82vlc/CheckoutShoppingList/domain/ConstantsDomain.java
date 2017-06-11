@@ -17,15 +17,13 @@
 package com.raulh82vlc.CheckoutShoppingList.domain;
 
 /**
- * Products constants
  * @author Raul Hernandez Lopez.
  */
 
-public final class ConstantsForProducts {
+public final class ConstantsDomain {
+    private ConstantsDomain() {
 
-    public final static int HTTP_OK_CODE = 200;
-    // Maximum number of products to add to the basket
-    public final static int LIMIT_OF_MY_SHOPPING = 100;
+    }
     // types of products
     public static final String VOUCHER_TYPE = "VOUCHER";
     public static final String TSHIRT_TYPE = "TSHIRT";
@@ -38,10 +36,4 @@ public final class ConstantsForProducts {
     public static final int DISCOUNT_PRICE_PER_UNIT = 1;
     // WHEN BOUGHT 3 OR MORE
     public static final int LIMIT_FOR_APPLYING_DISCOUNT = 3;
-    // NUMBER OF DECIMALS TO SHOW FORMAT
-    public static final String FORMAT_FOR_DECIMALS = "%.2f";
-
-    private ConstantsForProducts() {
-
-    }
 }

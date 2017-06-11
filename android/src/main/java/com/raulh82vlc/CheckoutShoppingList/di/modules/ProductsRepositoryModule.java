@@ -22,8 +22,6 @@ import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.NetOperations;
 import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.NetOperationsImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.connection.ConnectionHandler;
 import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.connection.ConnectionHandlerImpl;
-import com.raulh82vlc.CheckoutShoppingList.domain.repository.CheckoutStrategy;
-import com.raulh82vlc.CheckoutShoppingList.domain.repository.CheckoutStrategyImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.repository.ProductsRepository;
 import com.raulh82vlc.CheckoutShoppingList.domain.repository.ProductsRepositoryImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.repository.datasources.NetDataSource;
@@ -60,12 +58,6 @@ public class ProductsRepositoryModule {
     @Singleton
     NetDataSource provideNetDataSource(NetDataSourceImpl dataSource) {
         return dataSource;
-    }
-
-    @Provides
-    @Singleton
-    CheckoutStrategy provideCheckoutStrategy(CheckoutStrategyImpl checkoutStrategy) {
-        return checkoutStrategy;
     }
 
     @Provides

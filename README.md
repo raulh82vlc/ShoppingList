@@ -57,7 +57,7 @@ Support SDKs from **16** to **25**
 - [OkHttp 3](https://github.com/square/okhttp) v3.6.0 as client for Retrofit
 - [Timber](https://github.com/timber/timber) v4.1.2 for logs in debug mode only
 - [Mockito](http://site.mockito.org/) for Mocking artifacts
-- [JUnit](http://junit.org/) for Unit testing Graph algorithm and its datastructure or rounding.
+- [JUnit](http://junit.org/) for Unit tests
 
 # References (special thanks) - those are the same I indicated at my personal blog ([Insights and projects](https://raulh82vlc.github.io/Movies-Finder)): 
 - [Uncle Bob: The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Uncle Bob

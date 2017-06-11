@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.raulh82vlc.CheckoutShoppingList.domain.repository;
+package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 
-import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsForProducts;
+import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsDomain;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,13 +48,13 @@ public class CheckoutStrategyImplTest {
     @Test
     public void applyDiscountsToTypeXOrMore() throws Exception {
         assertEquals(57.0f, checkoutStrategy.applyDiscountsToTypeXOrMore(3, 20.0f, 3,
-                ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT), DELTA);
+                ConstantsDomain.DISCOUNT_PRICE_PER_UNIT), DELTA);
     }
 
     @Test
     public void applyDiscountsToTypeXOrMoreNoDiscount() throws Exception {
         assertEquals(40.0f, checkoutStrategy.applyDiscountsToTypeXOrMore(2, 20.0f, 3,
-                ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT), DELTA);
+                ConstantsDomain.DISCOUNT_PRICE_PER_UNIT), DELTA);
     }
 
     @Test
