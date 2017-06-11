@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package com.raulh82vlc.CheckoutShoppingList.interactors;
+package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 
 import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsDomain;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.InteractorExecutor;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.MainThread;
-import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutShoppingListInteractorImpl;
-import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutStrategyImpl;
-import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
 import com.raulh82vlc.CheckoutShoppingList.domain.repository.ProductsRepository;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -53,12 +49,13 @@ public class CheckoutShoppingListInteractorImplTest {
     MainThread mainThread;
     CheckoutStrategyImpl checkoutStrategy;
     private CheckoutShoppingListInteractorImpl underTest;
-    Map<String, Float> productsReference = new HashMap<>();
-    Map<String, Integer> shoppingListDictionary = new HashMap<>();
+    private Map<String, Float> productsReference = new HashMap<>();
+    private Map<String, Integer> shoppingListDictionary = new HashMap<>();
 
     @Before
     public void setUp() {
         initMocks(this);
+        checkoutStrategy = new CheckoutStrategyImpl();
         productsReference.put(ConstantsDomain.TSHIRT_TYPE, 20.0f);
         productsReference.put(ConstantsDomain.VOUCHER_TYPE, 5.0f);
         productsReference.put(ConstantsDomain.MUG_TYPE, 7.5f);
@@ -72,7 +69,14 @@ public class CheckoutShoppingListInteractorImplTest {
     }
 
     @Test
-    public void checkoutCurrentShoppingListMoreComplex() throws Exception {
+    public void checkoutCurrentShoppingEmptyList() throws Exception {
+        // checks expected format for the final check out to show to the user
+        assertEquals(0.0, underTest.getResultCheckOutSum(shoppingListDictionary, productsReference), DELTA);
+    }
+
+    @Test
+    public void checkoutCurrentShoppingListSimple() throws Exception {
+
         shoppingListDictionary.put(ConstantsDomain.TSHIRT_TYPE, 1);
         shoppingListDictionary.put(ConstantsDomain.MUG_TYPE, 1);
         shoppingListDictionary.put(ConstantsDomain.VOUCHER_TYPE, 1);
@@ -81,66 +85,18 @@ public class CheckoutShoppingListInteractorImplTest {
     }
 
     @Test
-    public void checkoutCurrentShoppingEmptyList() throws Exception {
-        // checks number of added products
-        Assert.assertEquals(0, repo.numberOfProductsOnBasket());
-
-        String expectedResult = "Items: \n"
-                + "Total: 0.00€";
-        // checks expected format for the final check out to show to the user
-        assertEquals(expectedResult, underTest.checkoutCurrentShoppingList());
-    }
-
-    @Test
-    public void checkoutCurrentShoppingListSimple() throws Exception {
-        // Adds products to the shopping list
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.VOUCHER_TYPE, "VOUCHER", 5.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.TSHIRT_TYPE, "TSHIRT", 20.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.MUG_TYPE, "MUG", 7.5f));
-        // checks number of added products
-        assertEquals(3, underTest.numberOfProductsOnBasket());
-        // checks final result
-        assertEquals(32.50f, underTest.getResultCheckOutSum(), DELTA);
-
-        String expectedResult = "Items: VOUCHER, TSHIRT, MUG\n"
-                + "Total: 32.50€";
-        // checks expected format for the final check out to show to the user
-        assertEquals(expectedResult, underTest.checkoutCurrentShoppingList());
-    }
-
-    @Test
     public void checkoutCurrentShoppingListSimple2() throws Exception {
-        // Adds products to the shopping list
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.VOUCHER_TYPE, "VOUCHER", 5.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.TSHIRT_TYPE, "TSHIRT", 20.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.VOUCHER_TYPE, "VOUCHER", 5.0f));
-        // checks number of added products
-        Assert.assertEquals(3, repo.numberOfProductsOnBasket());
-        // checks final result
-        assertEquals(25.00f, underTest.getResultCheckOutSum(), DELTA);
-
-        String expectedResult = "Items: VOUCHER, TSHIRT, VOUCHER\n"
-                + "Total: 25.00€";
+        shoppingListDictionary.put(ConstantsDomain.TSHIRT_TYPE, 1);
+        shoppingListDictionary.put(ConstantsDomain.VOUCHER_TYPE, 2);
         // checks expected format for the final check out to show to the user
-        assertEquals(expectedResult, underTest.checkoutCurrentShoppingList());
+        assertEquals(25.00, underTest.getResultCheckOutSum(shoppingListDictionary, productsReference), DELTA);
     }
 
     @Test
     public void checkoutCurrentShoppingListSomeDiscount() throws Exception {
-        // Adds products to the shopping list
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.TSHIRT_TYPE, "TSHIRT", 20.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.TSHIRT_TYPE, "TSHIRT", 20.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.TSHIRT_TYPE, "TSHIRT", 20.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.VOUCHER_TYPE, "VOUCHER", 5.0f));
-        repo.addProductToShoppingList(new ProductDomain(ConstantsDomain.TSHIRT_TYPE, "TSHIRT", 20.0f));
-        // checks number of added products
-        Assert.assertEquals(5, repo.numberOfProductsOnBasket());
-        // checks final result
-        assertEquals(81.00f, underTest.getResultCheckOutSum(), DELTA);
-
-        String expectedResult = "Items: TSHIRT, TSHIRT, TSHIRT, VOUCHER, TSHIRT\n"
-                + "Total: 81.00€";
+        shoppingListDictionary.put(ConstantsDomain.TSHIRT_TYPE, 4);
+        shoppingListDictionary.put(ConstantsDomain.VOUCHER_TYPE, 1);
         // checks expected format for the final check out to show to the user
-        assertEquals(expectedResult, underTest.checkoutCurrentShoppingList());
+        assertEquals(81.00f, underTest.getResultCheckOutSum(shoppingListDictionary, productsReference), DELTA);
     }
 }
