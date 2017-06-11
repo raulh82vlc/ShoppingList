@@ -16,8 +16,15 @@
 
 package com.raulh82vlc.CheckoutShoppingList.domain.interactors_response;
 
+import android.support.annotation.NonNull;
+
+import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsAndroid;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutShoppingListInteractor;
+import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
 import com.raulh82vlc.CheckoutShoppingList.ui.presentation.ProductsPresenter;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Checkout of shopping list by means of its callback, communicating towards its view
@@ -33,10 +40,29 @@ public class CheckoutShoppingListCallbackImpl implements CheckoutShoppingListInt
     }
 
     @Override
-    public void onCheckoutOK(String shoppingListCalculated) {
+    public void onCheckoutOK(float shoppingListCalculated, List<ProductDomain> shoppingList) {
         if (view.isReady()) {
             view.hideLoader();
-            view.showCheckoutResult(shoppingListCalculated);
+            view.showCheckoutResult(getCheckoutFormatted(shoppingListCalculated, shoppingList));
         }
     }
+
+    @NonNull
+    protected String getCheckoutFormatted(float resultCheckOutSum, List<ProductDomain> shoppingList) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Items: ");
+        int position = 0, sizeOfShoppingList = shoppingList.size();
+        for (ProductDomain productDomain : shoppingList) {
+            builder.append(productDomain.getTypeOfProduct());
+            position++;
+            if (position != sizeOfShoppingList) {
+                builder.append(", ");
+            }
+        }
+        builder.append("\nTotal: ");
+        builder.append(String.format(Locale.UK, ConstantsAndroid.FORMAT_FOR_DECIMALS, resultCheckOutSum));
+        builder.append("€");
+        return builder.toString();
+    }
+
 }

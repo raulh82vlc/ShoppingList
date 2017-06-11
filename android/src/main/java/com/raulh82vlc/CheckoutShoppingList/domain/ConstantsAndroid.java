@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
-
-import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
-
-import java.util.List;
+package com.raulh82vlc.CheckoutShoppingList.domain;
 
 /**
- * Check out shopping list Use case
- *
- * @author Raul Hernandez Lopez
+ * Products constants
+ * @author Raul Hernandez Lopez.
  */
-public interface CheckoutShoppingListInteractor {
 
-    void execute(CheckoutShoppingListCallback callback);
+public final class ConstantsAndroid {
 
-    interface CheckoutShoppingListCallback {
-        void onCheckoutOK(float shoppingListCalculated, List<ProductDomain> shoppingList);
+    public final static int HTTP_OK_CODE = 200;
+    // Maximum number of products to add to the basket
+    public final static int LIMIT_OF_MY_SHOPPING = 100;
+
+    // NUMBER OF DECIMALS TO SHOW FORMAT
+    public static final String FORMAT_FOR_DECIMALS = "%.2f";
+
+    private ConstantsAndroid() {
+
     }
 }

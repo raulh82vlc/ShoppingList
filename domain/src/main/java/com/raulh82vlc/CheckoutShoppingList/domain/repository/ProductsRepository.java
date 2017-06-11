@@ -21,6 +21,7 @@ import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.ConnectionException
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.HttpException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Products repository contract
@@ -39,5 +40,9 @@ public interface ProductsRepository<C, P> {
 
     boolean addProductToShoppingList(P productDomain);
 
-    String checkoutCurrentShoppingList();
+    List<P> getShoppingList();
+
+    Map<String, Integer> getShoppingListDictionary();
+
+    Map<String, Float> getProductsReferenceDictionary();
 }

@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.raulh82vlc.CheckoutShoppingList.R;
-import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsForProducts;
+import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsAndroid;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductUI;
 
 import java.util.Locale;
@@ -55,7 +55,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         typeOfProduct.setText(productUI.getTypeOfProduct());
         nameOfProduct.setText(productUI.getName());
         priceOfProduct.setText(context.getString(R.string.euro,
-                String.format(Locale.UK, ConstantsForProducts.FORMAT_FOR_DECIMALS,
+                String.format(Locale.UK, ConstantsAndroid.FORMAT_FOR_DECIMALS,
                 productUI.getPrice())));
         itemView.setTag(productUI);
     }
