@@ -18,12 +18,14 @@ package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 
 import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsDomain;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Check out strategy unit tests
  * @author Raul Hernandez Lopez.
  */
 public class CheckoutStrategyImplTest {
@@ -33,6 +35,11 @@ public class CheckoutStrategyImplTest {
     @Before
     public void setUp() {
         checkoutStrategy = new CheckoutStrategyImpl();
+    }
+
+    @After
+    public void tearDown() {
+        checkoutStrategy = null;
     }
 
     @Test
