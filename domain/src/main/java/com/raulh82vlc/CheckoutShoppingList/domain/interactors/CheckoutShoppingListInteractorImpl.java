@@ -41,7 +41,7 @@ public class CheckoutShoppingListInteractorImpl implements CheckoutShoppingListI
     final private ProductsRepository<ProductResponse, ProductDomain> repository;
     private CheckoutShoppingListCallback callback;
     // Strategy to checkout with discounts or without any
-    private CheckoutStrategy checkoutStrategy;
+    private final CheckoutStrategy checkoutStrategy;
 
     @Inject
     public CheckoutShoppingListInteractorImpl(InteractorExecutor executor,

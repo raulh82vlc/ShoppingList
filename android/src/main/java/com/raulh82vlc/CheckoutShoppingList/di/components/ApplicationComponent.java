@@ -24,6 +24,7 @@ import com.raulh82vlc.CheckoutShoppingList.di.modules.ApplicationModule;
 import com.raulh82vlc.CheckoutShoppingList.di.modules.ProductsRepositoryModule;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.InteractorExecutor;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.MainThread;
+import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutStrategy;
 import com.raulh82vlc.CheckoutShoppingList.domain.repository.ProductsRepository;
 
 import javax.inject.Singleton;
@@ -74,4 +75,9 @@ public interface ApplicationComponent {
      * Direct contact to repo
      */
     ProductsRepository dataRepo();
+
+    /**
+     * Direct contact to checkoutStrategy
+     */
+    CheckoutStrategy checkoutStrategy();
 }

@@ -19,8 +19,6 @@ package com.raulh82vlc.CheckoutShoppingList.di.modules;
 import com.raulh82vlc.CheckoutShoppingList.di.scopes.ActivityScope;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.AddProductToShoppingListInteractor;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.AddProductToShoppingListInteractorImpl;
-import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutStrategy;
-import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutStrategyImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutShoppingListInteractor;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.CheckoutShoppingListInteractorImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.interactors.GetProductsInteractor;
@@ -45,12 +43,6 @@ public class ProductsListModule {
     @ActivityScope
     CheckoutShoppingListInteractor provideCheckoutInteractor(CheckoutShoppingListInteractorImpl interactor) {
         return interactor;
-    }
-
-    @Provides
-    @ActivityScope
-    CheckoutStrategy provideCheckoutStrategy(CheckoutStrategyImpl checkoutStrategy) {
-        return checkoutStrategy;
     }
 
     @Provides
