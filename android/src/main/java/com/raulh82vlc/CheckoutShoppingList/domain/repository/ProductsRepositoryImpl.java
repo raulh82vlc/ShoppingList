@@ -16,9 +16,7 @@
 
 package com.raulh82vlc.CheckoutShoppingList.domain.repository;
 
-import android.support.annotation.NonNull;
-
-import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsForProducts;
+import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsAndroid;
 import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.NetDataSourceImpl;
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.ConnectionException;
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.HttpException;
@@ -29,7 +27,6 @@ import com.raulh82vlc.CheckoutShoppingList.domain.repository.datasources.NetData
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -44,20 +41,16 @@ import javax.inject.Inject;
 public class ProductsRepositoryImpl implements ProductsRepository<ProductResponse, ProductDomain> {
 
     private NetDataSource<ProductResponse> netDataSource;
-    // Strategy to checkout with discounts or without any
-    private CheckoutStrategy checkoutStrategy;
     // List of products on the basket of the shopping list (limited size)
-    private List<ProductDomain> shoppingList = new ArrayList<>(ConstantsForProducts.LIMIT_OF_MY_SHOPPING);
+    private List<ProductDomain> shoppingList = new ArrayList<>(ConstantsAndroid.LIMIT_OF_MY_SHOPPING);
     // Dictionary of shopping products added by type (type, number on basket)
     private Map<String, Integer> shoppingListDictionary = new HashMap<>();
     // Dictionary reference of products (code, price)
     private Map<String, Float> referenceProductListDictionary = new HashMap<>();
 
     @Inject
-    ProductsRepositoryImpl(NetDataSourceImpl netDataSource,
-                           CheckoutStrategyImpl checkOutStrategy) {
+    ProductsRepositoryImpl(NetDataSourceImpl netDataSource) {
         this.netDataSource = netDataSource;
-        this.checkoutStrategy = checkOutStrategy;
     }
 
     @Override
@@ -68,7 +61,7 @@ public class ProductsRepositoryImpl implements ProductsRepository<ProductRespons
     @Override
     public boolean addProductToShoppingList(ProductDomain productDomain) {
         boolean isAdded = false;
-        if (ConstantsForProducts.LIMIT_OF_MY_SHOPPING > shoppingList.size()) {
+        if (ConstantsAndroid.LIMIT_OF_MY_SHOPPING > shoppingList.size()) {
             shoppingList.add(productDomain);
             addToArticlesTypeCounter(productDomain);
             isAdded = true;
@@ -91,51 +84,17 @@ public class ProductsRepositoryImpl implements ProductsRepository<ProductRespons
     }
 
     @Override
-    public String checkoutCurrentShoppingList() {
-        return getCheckoutFormatted(getResultCheckOutSum());
+    public List<ProductDomain> getShoppingList() {
+        return shoppingList;
     }
 
-    @NonNull
-    private String getCheckoutFormatted(float resultCheckOutSum) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Items: ");
-        int position = 0, sizeOfShoppingList = shoppingList.size();
-        for (ProductDomain productDomain : shoppingList) {
-            builder.append(productDomain.getTypeOfProduct());
-            position++;
-            if (position != sizeOfShoppingList) {
-                builder.append(", ");
-            }
-        }
-        builder.append("\nTotal: ");
-        builder.append(String.format(Locale.UK, ConstantsForProducts.FORMAT_FOR_DECIMALS, resultCheckOutSum));
-        builder.append("€");
-        return builder.toString();
+    @Override
+    public Map<String, Integer> getShoppingListDictionary() {
+        return shoppingListDictionary;
     }
 
-    protected float getResultCheckOutSum() {
-        float resultCheckOutSum = 0f;
-        for (Map.Entry<String, Integer> setOfValues : shoppingListDictionary.entrySet()) {
-            switch (setOfValues.getKey()) {
-                case ConstantsForProducts.VOUCHER_TYPE:
-                    resultCheckOutSum += checkoutStrategy.applyDiscountsToTypeXperY(setOfValues.getValue(),
-                            referenceProductListDictionary.get(ConstantsForProducts.VOUCHER_TYPE),
-                            ConstantsForProducts.BUY,
-                            ConstantsForProducts.FREE);
-                    break;
-                case ConstantsForProducts.TSHIRT_TYPE:
-                    resultCheckOutSum += checkoutStrategy.applyDiscountsToTypeXOrMore(setOfValues.getValue(),
-                            referenceProductListDictionary.get(ConstantsForProducts.TSHIRT_TYPE),
-                            ConstantsForProducts.LIMIT_FOR_APPLYING_DISCOUNT,
-                            ConstantsForProducts.DISCOUNT_PRICE_PER_UNIT);
-                    break;
-                case ConstantsForProducts.MUG_TYPE:
-                default:
-                    resultCheckOutSum += checkoutStrategy.applyNoDiscounts(setOfValues.getValue(),
-                            referenceProductListDictionary.get(ConstantsForProducts.MUG_TYPE));
-                    break;
-            }
-        }
-        return resultCheckOutSum;
+    @Override
+    public Map<String, Float> getProductsReferenceDictionary() {
+        return referenceProductListDictionary;
     }
 }

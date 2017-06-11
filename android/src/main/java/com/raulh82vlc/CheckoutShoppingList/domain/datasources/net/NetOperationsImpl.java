@@ -20,7 +20,7 @@ import android.content.Context;
 
 import com.raulh82vlc.CheckoutShoppingList.BuildConfig;
 import com.raulh82vlc.CheckoutShoppingList.R;
-import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsForProducts;
+import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsAndroid;
 import com.raulh82vlc.CheckoutShoppingList.domain.datasources.net.connection.ConnectionHandler;
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.ConnectionException;
 import com.raulh82vlc.CheckoutShoppingList.domain.exceptions.HttpException;
@@ -98,6 +98,6 @@ public class NetOperationsImpl implements NetOperations<ProductResponse> {
 
     @Override
     public boolean isSuccess(int code) {
-        return code == ConstantsForProducts.HTTP_OK_CODE;
+        return code == ConstantsAndroid.HTTP_OK_CODE;
     }
 }

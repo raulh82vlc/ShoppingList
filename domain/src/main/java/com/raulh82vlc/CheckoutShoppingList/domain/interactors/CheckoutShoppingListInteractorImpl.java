@@ -16,12 +16,16 @@
 
 package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 
+import com.raulh82vlc.CheckoutShoppingList.domain.ConstantsDomain;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.Interactor;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.InteractorExecutor;
 import com.raulh82vlc.CheckoutShoppingList.domain.executors.MainThread;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductDomain;
 import com.raulh82vlc.CheckoutShoppingList.domain.models.ProductResponse;
 import com.raulh82vlc.CheckoutShoppingList.domain.repository.ProductsRepository;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -36,14 +40,18 @@ public class CheckoutShoppingListInteractorImpl implements CheckoutShoppingListI
     final private MainThread mainThread;
     final private ProductsRepository<ProductResponse, ProductDomain> repository;
     private CheckoutShoppingListCallback callback;
+    // Strategy to checkout with discounts or without any
+    private final CheckoutStrategy checkoutStrategy;
 
     @Inject
-    CheckoutShoppingListInteractorImpl(InteractorExecutor executor,
+    public CheckoutShoppingListInteractorImpl(InteractorExecutor executor,
                                        MainThread mainThread,
-                                       ProductsRepository repository) {
+                                       ProductsRepository repository,
+                                       CheckoutStrategy checkoutStrategy) {
         this.executor = executor;
         this.mainThread = mainThread;
         this.repository = repository;
+        this.checkoutStrategy = checkoutStrategy;
     }
 
     @Override
@@ -55,19 +63,57 @@ public class CheckoutShoppingListInteractorImpl implements CheckoutShoppingListI
     @Override
     public void run() {
         //there is no error case, because despite this is with an empty basket, says 0.00€
-        notifySuccessfullyCheckedOut(repository.checkoutCurrentShoppingList());
+        notifySuccessfullyCheckedOut(
+                getResultCheckOutSum(
+                        repository.getShoppingListDictionary(),
+                        repository.getProductsReferenceDictionary()),
+                repository.getShoppingList());
+
+    }
+
+    /**
+     * Checks proper business logic calculations with and without discounts
+     * @param shoppingListDictionary product amounts per product type
+     * @param referenceProductListDictionary product price per product type
+     * @return total amount calculated
+     */
+    protected float getResultCheckOutSum(Map<String, Integer> shoppingListDictionary,
+                                         Map<String, Float> referenceProductListDictionary) {
+        float resultCheckOutSum = 0f;
+        for (Map.Entry<String, Integer> setOfValues : shoppingListDictionary.entrySet()) {
+            switch (setOfValues.getKey()) {
+                case ConstantsDomain.VOUCHER_TYPE:
+                    resultCheckOutSum += checkoutStrategy.applyDiscountsToTypeXperY(setOfValues.getValue(),
+                            referenceProductListDictionary.get(ConstantsDomain.VOUCHER_TYPE),
+                            ConstantsDomain.BUY,
+                            ConstantsDomain.FREE);
+                    break;
+                case ConstantsDomain.TSHIRT_TYPE:
+                    resultCheckOutSum += checkoutStrategy.applyDiscountsToTypeXOrMore(setOfValues.getValue(),
+                            referenceProductListDictionary.get(ConstantsDomain.TSHIRT_TYPE),
+                            ConstantsDomain.LIMIT_FOR_APPLYING_DISCOUNT,
+                            ConstantsDomain.DISCOUNT_PRICE_PER_UNIT);
+                    break;
+                case ConstantsDomain.MUG_TYPE:
+                default:
+                    resultCheckOutSum += checkoutStrategy.applyNoDiscounts(setOfValues.getValue(),
+                            referenceProductListDictionary.get(ConstantsDomain.MUG_TYPE));
+                    break;
+            }
+        }
+        return resultCheckOutSum;
     }
 
     /**
      * <p>Notifies to the UI (main) thread the result of checkout,
      * and sends a callback the string</p>
-     * @param checkOutFormattedList
      */
-    private void notifySuccessfullyCheckedOut(final String checkOutFormattedList) {
+    private void notifySuccessfullyCheckedOut(final float shoppingListCalculated,
+                                              final List<ProductDomain> shoppingList) {
         mainThread.post(new Runnable() {
             @Override
             public void run() {
-                callback.onCheckoutOK(checkOutFormattedList);
+                callback.onCheckoutOK(shoppingListCalculated, shoppingList);
             }
         });
     }

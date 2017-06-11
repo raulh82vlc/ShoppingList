@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.raulh82vlc.CheckoutShoppingList.domain.repository;
+package com.raulh82vlc.CheckoutShoppingList.domain.interactors;
 
 import javax.inject.Inject;
 

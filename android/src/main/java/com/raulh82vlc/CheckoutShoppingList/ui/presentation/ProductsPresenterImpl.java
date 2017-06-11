@@ -105,10 +105,4 @@ public class ProductsPresenterImpl implements ProductsPresenter {
             interactorGetProductsList.execute(new GetProductsListCallbackImpl(view, productsListModelDataMapper));
         }
     }
-
-    private void errorCase(String error) {
-        view.hideLoader();
-        view.showEmptyState();
-        view.errorGettingProducts(error);
-    }
 }
